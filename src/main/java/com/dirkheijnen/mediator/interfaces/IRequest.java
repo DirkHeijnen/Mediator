@@ -17,7 +17,7 @@
 package com.dirkheijnen.mediator.interfaces;
 
 /**
- * The interface which describes the contract of the request.
+ * The interface which describes the contract of the {@link IRequest}.
  * This interface is used to flag requests so that they can be found on the classpath.
  *
  * @param <R> The response type of the {@link IRequest}

@@ -17,7 +17,7 @@
 package com.dirkheijnen.mediator.interfaces;
 
 /**
- * Defines the contract of the requesthandler.
+ * Defines the contract of the {@link IRequestHandler}.
  *
  * @author Dirk Heijnen
  * @since 1.0
@@ -28,9 +28,10 @@ package com.dirkheijnen.mediator.interfaces;
 public interface IRequestHandler<C extends IRequest<R>, R> {
 
     /**
-     * This function encapsulates the logic which should be executed for a given {@link IRequest}.
+     * This function encapsulates the logic which should be executed when a given {@link IRequest} is send
+     * to the {@link IRequestHandler}.
      *
-     * @param request The {@link IRequest} containing the input data for the handle method.
+     * @param request The {@link IRequest} containing the input data send with the request.
      * @return The response type which is set on the {@link IRequest}.
      */
     R handle(C request);

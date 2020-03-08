@@ -25,7 +25,7 @@ package com.dirkheijnen.mediator.interfaces;
 public interface IRequestHandlerProvider {
 
     /**
-     * Finds the {@link IRequestHandler} for a given {@link IRequest}.
+     * Gets the {@link IRequestHandler} for a given {@link IRequest}.
      *
      * @param request The {@link IRequest} class for which the corresponding {@link IRequestHandler} must be found.
      * @param <C> The type of the request which must implement the {@link IRequest} interface.
@@ -33,4 +33,5 @@ public interface IRequestHandlerProvider {
      * @return The {@link IRequestHandler} for the given {@link IRequest}.
      */
     <C extends IRequest<R>, R> IRequestHandler<C, R> getRequestHandler(Class<? extends C> request);
+
 }

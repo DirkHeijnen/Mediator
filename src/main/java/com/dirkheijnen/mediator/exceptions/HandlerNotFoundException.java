@@ -14,24 +14,31 @@
  * limitations under the License.
  */
 
-package com.dirkheijnen.mediator.interfaces;
+package com.dirkheijnen.mediator.exceptions;
+
+import com.dirkheijnen.mediator.interfaces.IRequest;
+import com.dirkheijnen.mediator.interfaces.IRequestHandler;
 
 /**
- * The interface which describes the contract of the {@link IMediator}
+ *  The {@link HandlerNotFoundException} is thrown when no {@link IRequestHandler} is found for a given {@link IRequest}.
  *
- * @author Dirk Heijnen
- * @since 1.0
+ *  @author Dirk Heijnen
+ *  @since 1.0
  */
-public interface IMediator {
+public class HandlerNotFoundException extends RuntimeException {
 
     /**
-     * Sends an {@link IRequest} to its {@link IRequestHandler}
-     *
-     * @param request The {@link IRequest} which should be send to its {@link IRequestHandler}
-     * @param <C> The type of the {@link IRequest}
-     * @param <R> The response type of the {@link IRequest} and {@link IRequestHandler}
-     * @return The response set as the type of the {@link IRequest}
+     *  Default exception handler without message.
      */
-    <C extends IRequest<R>, R> R send(C request);
+    public HandlerNotFoundException(){
+        super();
+    }
+
+    /**
+     *  Exception handler with a custom message.
+     */
+    public HandlerNotFoundException(String message){
+        super(message);
+    }
 
 }
