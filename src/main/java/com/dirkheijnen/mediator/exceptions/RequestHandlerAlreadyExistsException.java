@@ -36,7 +36,8 @@ public class RequestHandlerAlreadyExistsException extends RuntimeException {
     }
 
     /**
-     *  Exception handler with a custom message.
+     * Exception handler with a custom message.
+     * @param message The message of the error.
      */
     public RequestHandlerAlreadyExistsException(String message){
         super(message);
