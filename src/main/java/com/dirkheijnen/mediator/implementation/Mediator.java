@@ -16,12 +16,11 @@
 
 package com.dirkheijnen.mediator.implementation;
 
-import com.dirkheijnen.mediator.interfaces.IMediator;
-import com.dirkheijnen.mediator.interfaces.IRequest;
-import com.dirkheijnen.mediator.interfaces.IRequestHandler;
-import com.dirkheijnen.mediator.interfaces.IRequestHandlerProvider;
+import com.dirkheijnen.mediator.interfaces.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  *  The {@link Mediator} is used to send an {@link IRequest} to its {@link IRequestHandler} and call the handle method.
@@ -33,7 +32,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class Mediator implements IMediator {
 
-    private IRequestHandlerProvider requestHandlerProvider;
+    private final IRequestHandlerProvider requestHandlerProvider;
+    private final INotificationHandlerProvider notificationHandlerProvider;
 
     /**
      * The constructor of the {@link Mediator} class.
@@ -42,6 +42,7 @@ public class Mediator implements IMediator {
      */
     public Mediator(ApplicationContext applicationContext){
         this.requestHandlerProvider = new RequestHandlerProvider(applicationContext);
+        this.notificationHandlerProvider = new NotificationHandlerProvider(applicationContext);
     }
 
     /**
@@ -57,6 +58,21 @@ public class Mediator implements IMediator {
     public <C extends IRequest<R>, R> R send(C request) {
         IRequestHandler<C, R> requestHandler = requestHandlerProvider.getRequestHandler(request.getClass());
         return requestHandler.handle(request);
+    }
+
+    /**
+     * Publishes an {@link INotification} to all of its {@link INotificationHandler}
+     *
+     * @param notification The {@link INotification} which should be send to all of its {@link INotificationHandler}
+     * @param <T> The type of the {@link INotification}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends INotification> void publish(T notification) {
+        List<INotificationHandler<T>> notificationHandlers = (List<INotificationHandler<T>>)(Object)notificationHandlerProvider.getNotificationHandlers(notification.getClass());
+        for (INotificationHandler<T> notificationHandler : notificationHandlers){
+            notificationHandler.handle(notification);
+        }
     }
 
 }

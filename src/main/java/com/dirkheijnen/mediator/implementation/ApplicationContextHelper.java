@@ -16,6 +16,8 @@
 
 package com.dirkheijnen.mediator.implementation;
 
+import com.dirkheijnen.mediator.interfaces.INotification;
+import com.dirkheijnen.mediator.interfaces.INotificationHandler;
 import com.dirkheijnen.mediator.interfaces.IRequest;
 import com.dirkheijnen.mediator.interfaces.IRequestHandler;
 import org.springframework.context.ApplicationContext;
@@ -50,6 +52,15 @@ public class ApplicationContextHelper {
     }
 
     /**
+     * Retrieves all the bean names for all registered {@link INotificationHandler} beans.
+     *
+     * @return An array of {@link String} which contains all the names of the {@link INotificationHandler} beans.
+     */
+    public String[] getNotificationHandlerBeanNames(){
+        return applicationContext.getBeanNamesForType(INotificationHandler.class);
+    }
+
+    /**
      * Retrieves the bean object for the given bean name and casts it to an {@link IRequestHandler}.
      *
      * @param beanName The name of the bean for the {@link IRequestHandler} to be found.
@@ -57,6 +68,16 @@ public class ApplicationContextHelper {
      */
     public IRequestHandler<?, ?> getRequestHandlerByBeanName(String beanName){
         return (IRequestHandler<? ,?>) applicationContext.getBean(beanName);
+    }
+
+    /**
+     * Retrieves the bean object for the given bean name and casts it to an {@link INotificationHandler}.
+     *
+     * @param beanName The name of the bean for the {@link INotificationHandler} to be found.
+     * @return The {@link INotificationHandler} matching the provided bean name.
+     */
+    public INotificationHandler<?> getNotificationHandlerByBeanName(String beanName){
+        return (INotificationHandler<?>) applicationContext.getBean(beanName);
     }
 
     /**
@@ -70,6 +91,16 @@ public class ApplicationContextHelper {
      */
     public Class<?>[] getGenericTypesOfRequestHandler(IRequestHandler<?, ?> requestHandler){
         return GenericTypeResolver.resolveTypeArguments(requestHandler.getClass(), IRequestHandler.class);
+    }
+
+    /**
+     * Retrieves the generic type of the {@link INotificationHandler}.
+     *
+     * @param notificationHandler The {@link IRequestHandler} for which the generic types must be found.
+     * @return The generic type of the provided {@link INotificationHandler}.
+     */
+    public Class<?> getGenericTypeOfNotificationHandler(INotificationHandler<?> notificationHandler) {
+        return GenericTypeResolver.resolveTypeArgument(notificationHandler.getClass(), INotificationHandler.class);
     }
 
 }

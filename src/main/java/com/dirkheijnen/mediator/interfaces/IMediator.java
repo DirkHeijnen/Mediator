@@ -34,4 +34,12 @@ public interface IMediator {
      */
     <C extends IRequest<R>, R> R send(C request);
 
+    /**
+     * Publishes an {@link INotification} to all of its {@link INotificationHandler}
+     *
+     * @param notification The {@link INotification} which should be send to all of its {@link INotificationHandler}
+     * @param <T> The type of the {@link INotification}
+     */
+    <T extends INotification> void publish(T notification);
+
 }
